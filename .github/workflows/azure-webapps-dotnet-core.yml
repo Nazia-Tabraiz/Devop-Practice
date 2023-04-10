@@ -33,7 +33,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  build-stg:
     runs-on: ubuntu-latest
 
     steps:
@@ -55,6 +55,9 @@ jobs:
       - name: Build with dotnet
         run: dotnet build --configuration Release
         working-directory: "./FirstAzureApp"
+      - name: Testing 
+        run: dotnet test --no-build --verbosity normal 
+        working-directory: "./FirstAzureAppTests"
         
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
@@ -66,13 +69,13 @@ jobs:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
 
-  deploy:
+  deploy-stg:
     permissions:
       contents: none
     runs-on: ubuntu-latest
-    needs: build
+    needs: build-stg
     environment:
-      name: 'Development'
+      name: 'Staging'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
