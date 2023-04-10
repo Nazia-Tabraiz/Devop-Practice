@@ -84,11 +84,11 @@ jobs:
       
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.JSON_FILE_SECRET }}
+          creds: ${{ secrets.NAZIA_JSON }}
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.PUBLIC_PROFILE_SECRET }}
+          publish-profile: ${{ secrets.NAZIA_PROFILE }}
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
